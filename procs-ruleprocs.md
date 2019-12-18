@@ -11,3 +11,15 @@ $ open http://localhost:8080/fruits.html
 # `native-image` in the GRAALVM_HOME, Install it using `gu install native-image`
 $ mvn package -Pnative -DskipTests
 ```
+
+## docker
+```bash
+$ mvn package -DskipTests
+```
+
+## servant
+```bash
+$ start servant
+```
+
+
