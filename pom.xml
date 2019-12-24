@@ -27,6 +27,13 @@
     </dependencies>
   </dependencyManagement>
 
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -81,6 +88,12 @@
       <groupId>com.hankcs</groupId>
       <artifactId>hanlp</artifactId>
       <version>portable-1.7.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.yusufsyaifudin</groupId>
+      <artifactId>indonesia-ner</artifactId>
+      <version>1.0.1</version>
     </dependency>
 
     <dependency>

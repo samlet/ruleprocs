@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import py4j.CallbackClient;
 import py4j.GatewayServer;
+import sagas.langs.id.IndonesiaNer;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -27,6 +28,10 @@ public class ApplicaEntryPoint {
     public Stack getStack() {
         return injector.getInstance(Stack.class);
     }
+    public IndonesiaNer getIndonesiaNer(){
+        return injector.getInstance(IndonesiaNer.class);
+    }
+
     public static void main(String[] args) throws UnknownHostException {
         // entryPoint, port, defaultAddress(), connectTimeout, readTimeout, customCommands,
         //	 new CallbackClient(pythonPort, defaultAddress()), ServerSocketFactory.getDefault()
