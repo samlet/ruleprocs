@@ -20,6 +20,9 @@ else
 	"inventory")
 		start_inventory
 		;;
+	"build")
+	    mvn package -DskipTests
+	    ;;
 	"servant")
 	    java -cp target/ruleprocs-1.0-SNAPSHOT-runner.jar:target/lib/* sagas.rules.ApplicaEntryPoint
 	    ;;
