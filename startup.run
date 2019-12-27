@@ -8,6 +8,10 @@ function start_inventory(){
 	start_docker inventory "$msg_mysql"
 }
 
+function build(){
+    mvn package -DskipTests
+}
+
 # startup 
 if [ $# -lt 1 ]; then	
 	echo "available opts: all, zk, storm, repl, ..."
@@ -21,7 +25,11 @@ else
 		start_inventory
 		;;
 	"build")
-	    mvn package -DskipTests
+	    build
+	    ;;
+	"docker")
+	    build
+	    docker build . -f Dockerfile -t samlet/ruleprocs:0.1
 	    ;;
 	"servant")
 	    java -cp target/ruleprocs-1.0-SNAPSHOT-runner.jar:target/lib/* sagas.rules.ApplicaEntryPoint
