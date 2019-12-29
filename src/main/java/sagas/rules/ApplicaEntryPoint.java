@@ -7,34 +7,23 @@ import py4j.CallbackClient;
 import py4j.GatewayServer;
 import sagas.langs.id.IndonesiaNer;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import static py4j.GatewayServer.*;
 
+@Singleton
 public class ApplicaEntryPoint {
-
-    private Injector injector;
-
+    @Inject
+    private Stack stack;
+    private Provider<IndonesiaNer> indonesiaNer;
     public ApplicaEntryPoint() {
-        this.injector=Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-
-            }
-        });
     }
 
-    public Stack getStack() {
-        return injector.getInstance(Stack.class);
-    }
-    public IndonesiaNer getIndonesiaNer(){
-        return injector.getInstance(IndonesiaNer.class);
-    }
-
-    public static void main(String[] args) throws UnknownHostException {
-        // entryPoint, port, defaultAddress(), connectTimeout, readTimeout, customCommands,
-        //	 new CallbackClient(pythonPort, defaultAddress()), ServerSocketFactory.getDefault()
+    public void start() throws UnknownHostException{
         int port = 4333;
         int callbackPort = 4334;
         InetAddress defaultAddress=InetAddress.getByName("0.0.0.0");
@@ -45,6 +34,25 @@ public class ApplicaEntryPoint {
                 new CallbackClient(callbackPort, defaultAddress));
         gatewayServer.start();
         System.out.println(".. drools servant started");
+    }
+
+    public Stack getStack() {
+        return stack;
+    }
+
+    public IndonesiaNer getIndonesiaNer(){
+        return this.indonesiaNer.get();
+    }
+
+    public static void main(String[] args) throws UnknownHostException {
+        Injector injector;
+        injector=Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+
+            }
+        });
+        injector.getInstance(ApplicaEntryPoint.class).start();
     }
 
 }

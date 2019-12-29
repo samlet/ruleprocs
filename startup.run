@@ -34,6 +34,9 @@ else
 	"servant")
 	    java -cp target/ruleprocs-1.0-SNAPSHOT-runner.jar:target/lib/* sagas.rules.ApplicaEntryPoint
 	    ;;
+	"push")
+	    docker push samlet/ruleprocs:0.1
+	    ;;
 	*)
 		# default proc
 		handle_cmd ${@:1}
