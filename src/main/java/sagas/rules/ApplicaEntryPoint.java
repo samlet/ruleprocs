@@ -19,21 +19,9 @@ import static py4j.GatewayServer.*;
 public class ApplicaEntryPoint {
     @Inject
     private Stack stack;
+    @Inject
     private Provider<IndonesiaNer> indonesiaNer;
     public ApplicaEntryPoint() {
-    }
-
-    public void start() throws UnknownHostException{
-        int port = 4333;
-        int callbackPort = 4334;
-        InetAddress defaultAddress=InetAddress.getByName("0.0.0.0");
-        GatewayServer gatewayServer = new GatewayServer(
-                new ApplicaEntryPoint(),
-                port, defaultAddress,
-                DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, null,
-                new CallbackClient(callbackPort, defaultAddress));
-        gatewayServer.start();
-        System.out.println(".. drools servant started");
     }
 
     public Stack getStack() {
@@ -44,6 +32,19 @@ public class ApplicaEntryPoint {
         return this.indonesiaNer.get();
     }
 
+    private static void start(ApplicaEntryPoint app) throws UnknownHostException{
+        int port = 4333;
+        int callbackPort = 4334;
+        InetAddress defaultAddress=InetAddress.getByName("0.0.0.0");
+        GatewayServer gatewayServer = new GatewayServer(
+                app,
+                port, defaultAddress,
+                DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, null,
+                new CallbackClient(callbackPort, defaultAddress));
+        gatewayServer.start();
+        System.out.println(".. ruleprocs servant started");
+    }
+
     public static void main(String[] args) throws UnknownHostException {
         Injector injector;
         injector=Guice.createInjector(new AbstractModule() {
@@ -52,7 +53,8 @@ public class ApplicaEntryPoint {
 
             }
         });
-        injector.getInstance(ApplicaEntryPoint.class).start();
+        // injector.getInstance(ApplicaEntryPoint.class).start();
+        start(injector.getInstance(ApplicaEntryPoint.class));
     }
 
 }
